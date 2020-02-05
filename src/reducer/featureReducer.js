@@ -1,6 +1,6 @@
 import { ADD_FEATURE, REMOVE_FEATURE } from "../actions";
 
-
+// initial state set as object
 const initialState = {
     additionalPrice: 0,
     car: {
@@ -17,12 +17,13 @@ const initialState = {
         { id: 4, name: 'Rear spoiler', price: 250 }
     ]
 };
-
+//reducer takes in state = to above inititial state, and action
 export const reducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_FEATURE:
             return {
                 ...state,
+                //uses action for both adding and calculating total price
                 additionalPrice: (state.additionalPrice += action.payload.price),
                 car: {
                     ...state.car,
@@ -33,6 +34,7 @@ export const reducer = (state = initialState, action) => {
         case REMOVE_FEATURE:
             return {
                 ...state,
+                //uses action for both removing and decreasing total price
                 additionalPrice: (state.additionalPrice -= action.payload.price),
                 car: {
                     ...state.car,
