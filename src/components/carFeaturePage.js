@@ -5,41 +5,45 @@ import AddedFeatures from '../components/AddedFeatures';
 import AdditionalFeatures from '../components/AdditionalFeatures';
 import Total from '../components/Total';
 import { addFeature, removeFeature } from '../actions/index.js'
+import { useDispatch, useSelector } from 'react-redux';
 
-export const CarFeaturePage = (props) => {
-    const removeFeature = item => {
+const CarFeaturePage = () => {
+    const state = useSelector(state => state);
+    const dispatch = useDispatch()
+    
+    const deleteFeature = item => {
         // dispatch an action here to remove an item
-        props.removeFeature(item);
+        dispatch(removeFeature(item));
         
       };
     
       const buyItem = item => {
         // dipsatch an action here to add an item
-        props.addFeature(item);
-        console.log(item);
+        dispatch(addFeature(item));
+        
       };
     
       return (
         <div className="boxes">
           <div className="box">
-            <Header car={props.car} additionalPrice={props.additionalPrice} />
-            <AddedFeatures removeFeature={removeFeature} additionalFeatures={props.additionalFeatures} car={props.car} />
+            <Header car={state.car} additionalPrice={state.additionalPrice} />
+            <AddedFeatures removeFeature={deleteFeature} additionalFeatures={state.additionalFeatures} car={state.car} />
           </div>
           <div className="box">
-            <AdditionalFeatures buyItem={buyItem} additionalFeatures={props.additionalFeatures} />
-            <Total car={props.car} additionalPrice={props.additionalPrice} />
+            <AdditionalFeatures buyItem={buyItem} additionalFeatures={state.additionalFeatures} />
+            <Total car={state.car} additionalPrice={state.additionalPrice} />
           </div>
         </div>
       );
     };
     
-    const mapStateToProps = (state) => {
-      return {
-        car: state.car,
-        additionalFeatures: state.additionalFeatures,
-        additionalPrice: state.additionalPrice,
-      }
-    }
+    // const mapStateToProps = (state) => {
+    //   return {
+    //     car: state.car,
+    //     additionalFeatures: state.additionalFeatures,
+    //     additionalPrice: state.additionalPrice,
+    //   }
+    // }
     
-    export default connect(mapStateToProps, { addFeature, removeFeature }) (CarFeaturePage);
+    export default CarFeaturePage;
     
